@@ -39,7 +39,7 @@ class LaporanController extends Controller
 
         // Upload file// Simpan file ke storage
         $path = $request->file('uploadGambar')->store('uploads', 'public');
-        return response()->json(['path' => $path]);
+        // return response()->json(['path' => $path]);
 
         // Cek hasil upload
 
@@ -61,4 +61,12 @@ class LaporanController extends Controller
 
         return redirect()->back()->with('success', 'Laporan berhasil diajukan.');
     }
+
+    public function index()
+    {
+        $laporans = DB::table('laporans')->orderBy('created_at')->get();
+
+        return view('home', compact('laporans'));
+    }
+
 }

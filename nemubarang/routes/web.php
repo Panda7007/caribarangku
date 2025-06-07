@@ -7,9 +7,11 @@ use App\Http\Controllers\LaporanController;
 Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [LaporanController::class, 'index'])->name('laporan.index');
+
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Route::get('/dashboard', function () {
     return view('pengajuan');

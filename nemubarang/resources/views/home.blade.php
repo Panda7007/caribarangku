@@ -177,81 +177,35 @@
 
     <!-- Postingan -->
     <div id="postingan" class="container my-5">
-        <div class="row g-4">
-
-            <!-- Template Postingan -->
-            <div class="col-md-4">
-                <div class="card post-card shadow-sm h-100">
-                    <img src="https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                        class="card-img-top" alt="Gambar Barang">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            Dompet Hitam - <span class="badge bg-danger">Barang Dicari</span>
-                        </h5>
-                        <ul class="list-unstyled small mb-2">
-                            <li><strong>Jenis:</strong> Dompet</li>
-                            <li><strong>Lokasi:</strong> Daerah Senayan, Jakarta</li>
-                            <li><strong>Tanggal:</strong> 5 Juni 2025</li>
-                        </ul>
-                        <p class="card-text">
-                            Dompet berisi KTP & ATM hilang di sekitar Senayan. Mohon bantuannya jika menemukan 🙏
-                        </p>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        Diposting oleh: <strong>@andi_hilang</strong> • 1 hari lalu
-                    </div>
-                </div>
-            </div>
-
-            <!-- Postingan 2 -->
-            <div class="col-md-4">
-                <div class="card post-card shadow-sm h-100">
-                    <img src="https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                        class="card-img-top" alt="Gambar Barang">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            iPhone XR - <span class="badge bg-danger">Barang Dicari</span>
-                        </h5>
-                        <ul class="list-unstyled small mb-2">
-                            <li><strong>Jenis:</strong> Handphone</li>
-                            <li><strong>Lokasi:</strong> Mall Kelapa Gading</li>
-                            <li><strong>Tanggal:</strong> 6 Juni 2025</li>
-                        </ul>
-                        <p class="card-text">
-                            Kehilangan HP casing hitam polos, mohon bantuannya 🙏
-                        </p>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        Diposting oleh: <strong>@lia_phone</strong> • 3 jam lalu
+        <div class="row g4">
+            @foreach($laporans as $laporan)
+                <div class="col-md-4">
+                    <div class="card post-card shadow-sm h-100">
+                        <img src="{{ asset('storage/' . $laporan->gambar) }}" class="card-img-top" alt="Gambar Barang">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ ucfirst($laporan->jenis_barang) }} -
+                                <span class="badge bg-danger">Barang {{ ucfirst($laporan->status) }}</span>
+                            </h5>
+                            <ul class="list-unstyled small mb-2">
+                                <li><strong>Jenis:</strong> {{ $laporan->jenis_barang }}</li>
+                                <li><strong>Lokasi:</strong> {{ $laporan->lokasi }}</li>
+                                <li><strong>Tanggal:</strong>
+                                    {{ \Carbon\Carbon::parse($laporan->tanggal_kejadian)->format('d F Y') }}</li>
+                            </ul>
+                            <p class="card-text">
+                                {{ $laporan->keterangan }}
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Diposting oleh: <strong>{{ $laporan->nama }}</strong> •
+                            {{ \Carbon\Carbon::parse($laporan->created_at)->diffForHumans() }}
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Postingan 3 -->
-            <div class="col-md-4">
-                <div class="card post-card shadow-sm h-100">
-                    <img src="https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                        class="card-img-top" alt="Gambar Barang">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            Kunci Motor - <span class="badge bg-success">Barang Ditemukan</span>
-                        </h5>
-                        <ul class="list-unstyled small mb-2">
-                            <li><strong>Jenis:</strong> Kunci</li>
-                            <li><strong>Lokasi:</strong> Sekitar kampus UI</li>
-                            <li><strong>Tanggal:</strong> 4 Juni 2025</li>
-                        </ul>
-                        <p class="card-text">
-                            Menemukan kunci motor Honda. Bisa diambil jika bisa verifikasi gantungan.
-                        </p>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        Diposting oleh: <strong>@sari_ditemukan</strong> • 2 hari lalu
-                    </div>
-                </div>
-            </div>
-
+            @endforeach
         </div>
+
     </div>
 
 
@@ -338,6 +292,16 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                myModal.show();
+            });
+        </script>
+    @endif
+
 
     <script>
         function previewImageFunc(event) {
@@ -459,6 +423,7 @@
                     <div class="col-md-7">
                         <div class="card shadow-sm">
                             <div class="card-body">
+
                                 <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-3">
@@ -536,6 +501,24 @@
         </div>
     </div>
 </div>
+<!-- Modal Berhasil -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">Berhasil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+                {{ session('success') }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 </html>

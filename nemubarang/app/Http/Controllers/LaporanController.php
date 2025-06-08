@@ -64,9 +64,30 @@ class LaporanController extends Controller
 
     public function index()
     {
-        $laporans = DB::table('laporans')->orderBy('created_at')->get();
+        $laporans1 = DB::table('laporans')->orderBy('created_at')->get();
 
+        $laporans = DB::SELECT("
+        select * from laporans l where l.status_laporan = 2
+        ");
         return view('home', compact('laporans'));
+    }
+
+    public function setujui($id)
+    {
+        DB::table('laporans')
+            ->where('id', $id)
+            ->update(['status_laporan' => 2, 'updated_at' => now()]);
+
+        return redirect()->back()->with('success', 'Postingan telah disetujui.');
+    }
+
+    public function tolak($id)
+    {
+        DB::table('laporans')
+            ->where('id', $id)
+            ->update(['status_laporan' => 0, 'updated_at' => now()]);
+
+        return redirect()->back()->with('error', 'Postingan telah ditolak.');
     }
 
 }

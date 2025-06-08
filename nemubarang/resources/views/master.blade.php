@@ -53,7 +53,7 @@
 </head>
 
 <body>
-  
+
 
   <div class="d-flex">
     <!-- Sidebar -->
@@ -61,24 +61,25 @@
       <h4 class="text-white fw-bold mb-4">Admin</h4>
       <ul class="nav flex-column">
         <li class="nav-item mb-2">
-        <a class="nav-link active" href="/dashboard"><i class="bi bi-bar-chart"></i> Dashboard</a>
+          <a class="nav-link active" href="/dashboard"><i class="bi bi-bar-chart"></i> Dashboard</a>
         </li>
         <li class="nav-item mb-2">
-        <a class="nav-link" href="/dashboard/kehilangan"><i class="bi bi-search"></i> Barang Hilang</a>
+          <a class="nav-link" href="/dashboard/kehilangan"><i class="bi bi-search"></i> Barang Hilang</a>
         </li>
         <li class="nav-item mb-2">
-        <a class="nav-link" href="/dashboard/ditemukan"><i class="bi bi-box-seam"></i> Barang Ditemukan</a>
+          <a class="nav-link" href="/dashboard/ditemukan"><i class="bi bi-box-seam"></i> Barang Ditemukan</a>
         </li>
         <li class="nav-item mb-2">
-        <a class="nav-link" href="/dashboard/postingan"><i class="bi bi-pencil-square"></i> Postingan</a>
+          <a class="nav-link" href="/dashboard/postingan"><i class="bi bi-pencil-square"></i> Postingan</a>
         </li>
         <li class="nav-item mb-3">
-        <a class="nav-link" href="/dashboard/postingan-selesai"><i class="bi bi-check-circle"></i> Postingan Selesai</a>
+          <a class="nav-link" href="/dashboard/postingan-selesai"><i class="bi bi-check-circle"></i> Postingan
+            Selesai</a>
         </li>
         <li>
-        <button class="btn btn-primary" id="toggleModeBtn">
+          <button class="btn btn-primary" id="toggleModeBtn">
             <i class="bi bi-moon-fill"></i> Mode Gelap
-        </button>
+          </button>
         </li>
 
       </ul>
@@ -89,8 +90,23 @@
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded mb-4 px-3">
         <span class="navbar-brand fw-semibold text-primary">Dashboard Admin</span>
-       
+
       </nav>
+
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+
+      @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+
 
       <!-- Ringkasan Statistik -->
       <div class="row g-3 mb-4">
@@ -170,6 +186,40 @@
         : '<i class="bi bi-moon-fill"></i> Mode Gelap';
     });
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function konfirmasiSetujui(id) {
+      Swal.fire({
+        title: 'Setujui Postingan?',
+        text: "Data akan diterbitkan ke halaman utama.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Setujui',
+        cancelButtonText: 'Batal',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/dashboard/laporan/setujui/${id}`;
+        }
+      });
+    }
+
+    function konfirmasiTolak(id) {
+      Swal.fire({
+        title: 'Tolak Postingan?',
+        text: "Data akan ditandai sebagai ditolak.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Tolak',
+        cancelButtonText: 'Batal',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/dashboard/laporan/tolak/${id}`;
+        }
+      });
+    }
+  </script>
+
 
 </body>
 

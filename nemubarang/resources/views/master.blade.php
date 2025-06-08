@@ -81,6 +81,17 @@
             <i class="bi bi-moon-fill"></i> Mode Gelap
           </button>
         </li>
+        <li>
+          <!-- Di dalam bagian yang hanya muncul saat user login -->
+          @auth
+        <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        </form>
+      @endauth
+        </li>
 
       </ul>
     </div>

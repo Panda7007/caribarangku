@@ -64,7 +64,6 @@
                 </ul>
                 <button class="btn btn-outline-light me-2" data-bs-toggle="modal"
                     data-bs-target="#loginModal">Masuk</button>
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#registerModal">Daftar</button>
             </div>
         </div>
     </nav>
@@ -239,23 +238,51 @@
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="loginModalLabel">Masuk ke Akun Anda</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- Email Address -->
                         <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email / Username</label>
-                            <input type="text" class="form-control" id="loginEmail" required>
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="form-control" type="email" name="email"
+                                :value="old('email')" required autofocus autocomplete="username" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                         </div>
+
+                        <!-- Password -->
                         <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Kata Sandi</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
+                            <x-input-label for="password" :value="__('Password')" />
+                            <x-text-input id="password" class="form-control" type="password" name="password" required
+                                autocomplete="current-password" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                         </div>
+
+                        <!-- Remember Me -->
+                        <div class="mb-3 form-check">
+                            <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
+                            <label for="remember_me" class="form-check-label">
+                                {{ __('Remember me') }}
+                            </label>
+                        </div>
+
+                        <!-- Forgot Password -->
+                        @if (Route::has('password.request'))
+                            <div class="text-end">
+                                <a class="text-decoration-none" href="{{ route('password.request') }}">
+                                    {{ __('Forgot your password?') }}
+                                </a>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Masuk</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <x-primary-button class="btn btn-primary">
+                            {{ __('Log in') }}
+                        </x-primary-button>
                     </div>
                 </form>
             </div>

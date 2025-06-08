@@ -167,12 +167,12 @@
 
     <!-- Filter Section -->
     <div class="container text-center my-5">
-        <h2 class="mb-4">Kategori Postingan</h2>
-        <div class="btn-group" role="group" aria-label="Kategori">
+        <h2 class="mb-4">Postingan Barang Hilang</h2>
+        <!-- <div class="btn-group" role="group" aria-label="Kategori">
             <button type="button" class="btn btn-outline-primary">Semua</button>
             <button type="button" class="btn btn-outline-danger">Barang Hilang</button>
             <button type="button" class="btn btn-outline-success">Barang Ditemukan</button>
-        </div>
+        </div> -->
     </div>
 
     <!-- Postingan -->
@@ -199,7 +199,7 @@
                         </div>
                         <div class="card-footer text-muted small">
                             Diposting oleh: <strong>{{ $laporan->nama }}</strong> •
-                            {{ \Carbon\Carbon::parse($laporan->created_at)->diffForHumans() }}
+                            {{ \Carbon\Carbon::parse($laporan->updated_at)->diffForHumans() }}
                         </div>
                     </div>
                 </div>
@@ -429,30 +429,30 @@
                                     <div class="mb-3">
                                         <label for="uploadGambar" class="form-label">Upload Gambar Barang</label>
                                         <input type="file" class="form-control" name="uploadGambar" id="uploadGambar"
-                                            accept="image/*" onchange="previewImageFunc(event)">
+                                            accept="image/*" onchange="previewImageFunc(event)" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="namaUser" class="form-label">Nama Anda</label>
                                         <input type="text" class="form-control" name="namaUser" id="namaUser"
-                                            placeholder="Nama Lengkap">
+                                            placeholder="Nama Lengkap" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="emailUser" class="form-label">Email Anda</label>
                                         <input type="email" class="form-control" name="emailUser" id="emailUser"
-                                            placeholder="nama@email.com">
+                                            placeholder="nama@email.com" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="waUser" class="form-label">Nomor WhatsApp</label>
                                         <input type="tel" class="form-control" name="waUser" id="waUser"
-                                            placeholder="08xxxxxxxxxx">
+                                            placeholder="08xxxxxxxxxx" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="jenisBarang" class="form-label">Jenis Barang</label>
-                                        <select class="form-select" name="jenisBarang" id="jenisBarang">
+                                        <select class="form-select" name="jenisBarang" id="jenisBarang" required>
                                             <option selected disabled>-- Pilih Jenis Barang --</option>
                                             <option value="dompet">Dompet</option>
                                             <option value="hp">Handphone</option>
@@ -466,23 +466,24 @@
                                     <div class="mb-3">
                                         <label for="lokasi" class="form-label">Lokasi Hilang / Ditemukan</label>
                                         <input type="text" class="form-control" name="lokasi" id="lokasi"
-                                            placeholder="Contoh: Mall Kelapa Gading, Jakarta">
+                                            placeholder="Contoh: Mall Kelapa Gading, Jakarta" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="tanggal" class="form-label">Tanggal Kejadian</label>
-                                        <input type="date" class="form-control" name="tanggal" id="tanggal">
+                                        <input type="date" class="form-control" name="tanggal" id="tanggal" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="keterangan" class="form-label">Keterangan Barang</label>
                                         <textarea class="form-control" name="keterangan" id="keterangan" rows="4"
-                                            placeholder="Contoh: Dompet hitam berisi KTP dan ATM tertinggal di halte bus..."></textarea>
+                                            placeholder="Contoh: Dompet hitam berisi KTP dan ATM tertinggal di halte bus..."
+                                            required></textarea>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="statusBarang" class="form-label">Status Barang</label>
-                                        <select class="form-select" name="statusBarang" id="statusBarang">
+                                        <select class="form-select" name="statusBarang" id="statusBarang" required>
                                             <option selected disabled>-- Pilih Status --</option>
                                             <option value="ditemukan">Barang Ditemukan</option>
                                             <option value="dicari">Barang Dicari</option>

@@ -11,20 +11,20 @@ class LaporanController extends Controller
     public function store(Request $request)
     {
 
-        $data = [
-            'namaUser' => 'Budi Santoso',
-            'emailUser' => 'budi@example.com',
-            'waUser' => '081234567890',
-            'jenisBarang' => 'dompet',
-            'lokasi' => 'Stasiun Gambir, Jakarta',
-            'tanggal' => '2025-06-01',
-            'keterangan' => 'Dompet warna cokelat berisi KTP dan kartu ATM.',
-            'statusBarang' => 'dicari',
-        ];
+        // $data = [
+        //     'namaUser' => 'Budi Santoso',
+        //     'emailUser' => 'budi@example.com',
+        //     'waUser' => '081234567890',
+        //     'jenisBarang' => 'dompet',
+        //     'lokasi' => 'Stasiun Gambir, Jakarta',
+        //     'tanggal' => '2025-06-01',
+        //     'keterangan' => 'Dompet warna cokelat berisi KTP dan kartu ATM.',
+        //     'statusBarang' => 'dicari',
+        // ];
 
 
 
-        $request->merge($data); // Masukkan dummy ke dalam $request
+        // $request->merge($data); // Masukkan dummy ke dalam $request
         $request->validate([
             'uploadGambar' => 'required|image|max:2048',
             'namaUser' => 'required|string|max:100',
@@ -90,4 +90,12 @@ class LaporanController extends Controller
         return redirect()->back()->with('error', 'Postingan telah ditolak.');
     }
 
+    public function selesai($id)
+    {
+        DB::table('laporans')
+            ->where('id', $id)
+            ->update(['status_laporan' => 3, 'updated_at' => now()]);
+
+        return redirect()->back()->with('error', 'Postingan telah ditarik.');
+    }
 }

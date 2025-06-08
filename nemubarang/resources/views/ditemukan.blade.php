@@ -21,6 +21,8 @@
         <th>Tanggal</th>
         <th>Deskripsi</th>
         <th>Pengirim</th>
+        <th>Email</th>
+        <th>No WA</th>
         <th>Tanggal Posting</th>
         <th>Status</th>
       </tr>
@@ -44,7 +46,9 @@
       <td>{{ \Carbon\Carbon::parse($row->tanggal_kejadian)->format('d M Y') }}</td>
       <td>{{ $row->keterangan }}</td>
       <td>{{ '@' . Str::slug($row->nama, '_') }}</td>
-      <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d') }}</td>
+      <td>{{ $row->email }}</td>
+      <td>{{ $row->whatsapp }}</td>
+      <td>{{ \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d') }}</td>
       <td>
       <button class="btn btn-sm btn-warning">Dalam Postingan</button>
       </td>

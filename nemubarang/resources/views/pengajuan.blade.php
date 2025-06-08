@@ -22,6 +22,8 @@
         <th>Tanggal</th>
         <th>Deskripsi</th>
         <th>Pengirim</th>
+        <th>Email</th>
+        <th>No WA</th>
         <th>Aksi</th>
       </tr>
       </thead>
@@ -44,6 +46,8 @@
       <td>{{ \Carbon\Carbon::parse($row->tanggal_kejadian)->format('d M Y') }}</td>
       <td>{{ $row->keterangan }}</td>
       <td>{{ '@' . Str::slug($row->nama, '_') }}</td>
+      <td>{{ $row->email }}</td>
+      <td>{{ $row->whatsapp }}</td>
       <td>
       <button class="btn btn-sm btn-success me-1" onclick="konfirmasiSetujui({{ $row->id }})">Setujui</button>
       <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiTolak({{ $row->id }})">Tolak</button>
@@ -69,24 +73,6 @@
       </div>
       </div>
     @endforeach
-      <!-- Modal Gambar -->
-      @foreach($data as $row)
-      <div class="modal fade" id="modalGambar{{ $row->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $row->id }}"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel{{ $row->id }}">Gambar Barang</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-        </div>
-        <div class="modal-body text-center">
-        <img src="{{ asset('storage/' . $row->gambar) }}" class="img-fluid rounded">
-        </div>
-      </div>
-      </div>
-      </div>
-    @endforeach
-
       </tbody>
     </table>
     </div>
@@ -109,7 +95,8 @@
         <th>Tanggal</th>
         <th>Deskripsi</th>
         <th>Pengirim</th>
-        <th>Tanggal Posting</th>
+        <th>Email</th>
+        <th>No WA</th>
         <th>Status</th>
       </tr>
       </thead>
@@ -132,7 +119,8 @@
       <td>{{ \Carbon\Carbon::parse($row->tanggal_kejadian)->format('d M Y') }}</td>
       <td>{{ $row->keterangan }}</td>
       <td>{{ '@' . Str::slug($row->nama, '_') }}</td>
-      <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d') }}</td>
+      <td>{{ $row->email }}</td>
+      <td>{{ $row->whatsapp }}</td>
       <td>
       <button class="btn btn-sm btn-warning">Ditolak</button>
       </td>

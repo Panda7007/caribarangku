@@ -107,7 +107,6 @@
       </div>
     @endif
 
-
       <!-- Ringkasan Statistik -->
       <div class="row g-3 mb-4">
         <div class="col-md-3">
@@ -215,6 +214,21 @@
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = `/dashboard/laporan/tolak/${id}`;
+        }
+      });
+    }
+
+    function konfirmasiSelesai(id) {
+      Swal.fire({
+        title: 'Postingan Selesai?',
+        text: "Data akan ditandai sebagai Selesai.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Selesai',
+        cancelButtonText: 'Batal',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/dashboard/laporan/selesai/${id}`;
         }
       });
     }

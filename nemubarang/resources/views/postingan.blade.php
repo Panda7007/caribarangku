@@ -21,8 +21,11 @@
         <th>Tanggal</th>
         <th>Deskripsi</th>
         <th>Pengirim</th>
+        <th>Email</th>
+        <th>No WA</th>
         <th>Tanggal Posting</th>
         <th>Status</th>
+        <th>Action</th>
       </tr>
       </thead>
       <tbody>
@@ -44,14 +47,21 @@
       <td>{{ \Carbon\Carbon::parse($row->tanggal_kejadian)->format('d M Y') }}</td>
       <td>{{ $row->keterangan }}</td>
       <td>{{ '@' . Str::slug($row->nama, '_') }}</td>
-      <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d') }}</td>
+      <td>{{ $row->email }}</td>
+      <td>{{ $row->whatsapp }}</td>
+      <td>{{ \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d') }}</td>
       <td>
       <button class="btn btn-sm btn-warning">Dalam Postingan</button>
+      </td>
+      <td>
+      <button class="btn btn-sm btn-primary" onclick="konfirmasiSelesai({{ $row->id }})">Selesaikan
+        Postingan</button>
+
       </td>
       </tr>
     @endforeach
       @foreach($data as $row)
-      <div class="modal fade" id="modalGambar{{ $row->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $row->id }}"
+      <div class=" modal fade" id="modalGambar{{ $row->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $row->id }}"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">

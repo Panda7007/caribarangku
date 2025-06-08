@@ -24,4 +24,5 @@ Route::get('/dashboard/postingan-selesai', [AdminController::class, 'postingan_s
 
 Route::get('/dashboard/laporan/setujui/{id}', [LaporanController::class, 'setujui'])->name('laporan.setujui');
 Route::get('/dashboard/laporan/tolak/{id}', [LaporanController::class, 'tolak'])->name('laporan.tolak');
+Route::get('/dashboard/laporan/selesai/{id}', [LaporanController::class, 'selesai'])->name('laporan.selesai');
 

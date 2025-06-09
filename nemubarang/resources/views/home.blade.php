@@ -57,11 +57,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav me-3">
+                <!-- <ul class="navbar-nav me-3">
                     <li class="nav-item"><a class="nav-link active" href="#">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Barang Dicari</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Barang Ditemukan</a></li>
-                </ul>
+                </ul> -->
                 <button class="btn btn-outline-light me-2" data-bs-toggle="modal"
                     data-bs-target="#loginModal">Masuk</button>
             </div>
@@ -195,6 +195,11 @@
                             <p class="card-text">
                                 {{ $laporan->keterangan }}
                             </p>
+                            {{-- Tombol Kirim WhatsApp --}}
+                            <a href="https://wa.me/{{ $laporan->no_wa ?? '62887831666273' }}?text={{ urlencode("Halo, saya ingin menanyakan laporan tentang barang " . ucfirst($laporan->jenis_barang) . " yang " . ucfirst($laporan->status) . ". Lokasi: " . $laporan->lokasi . ", Tanggal: " . \Carbon\Carbon::parse($laporan->tanggal_kejadian)->format('d F Y')) }}"
+                                class="btn btn-success btn-sm mt-2" target="_blank">
+                                <i class="bi bi-whatsapp"></i> Tanya
+                            </a>
                         </div>
                         <div class="card-footer text-muted small">
                             Diposting oleh: <strong>{{ $laporan->nama }}</strong> •
@@ -203,6 +208,7 @@
                     </div>
                 </div>
             @endforeach
+
         </div>
 
     </div>
@@ -404,18 +410,35 @@
                     <li><strong>Instagram:</strong> <a href="https://instagram.com/baranghilangid"
                             target="_blank">@baranghilangid</a></li>
                 </ul>
-                <form>
+                <form onsubmit="kirimKeWhatsApp(); return false;">
                     <div class="mb-3">
                         <label for="namaUser" class="form-label">Nama Anda</label>
-                        <input type="text" class="form-control" id="namaUser" placeholder="Nama lengkap">
+                        <input type="text" class="form-control" id="namaUser" placeholder="Nama lengkap" required>
                     </div>
                     <div class="mb-3">
                         <label for="pesanUser" class="form-label">Pesan</label>
-                        <textarea class="form-control" id="pesanUser" rows="3"
-                            placeholder="Tulis pesan Anda..."></textarea>
+                        <textarea class="form-control" id="pesanUser" rows="3" placeholder="Tulis pesan Anda..."
+                            required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Kirim Pesan</button>
                 </form>
+
+                <script>
+                    function kirimKeWhatsApp() {
+                        const nama = document.getElementById('namaUser').value.trim();
+                        const pesan = document.getElementById('pesanUser').value.trim();
+
+                        if (nama && pesan) {
+                            const nomorWA = '62887831666273'; // Ganti dengan nomor tujuan
+                            const teks = `Halo, saya ${nama}. ${pesan}`;
+                            const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`;
+                            window.open(url, '_blank');
+                        } else {
+                            alert("Nama dan pesan harus diisi.");
+                        }
+                    }
+                </script>
+
             </div>
         </div>
     </div>
